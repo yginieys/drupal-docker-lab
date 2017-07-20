@@ -1,0 +1,628 @@
+/* -----------------------------------------------------------------------------
+
+  Bootstrap 3 Variables and Mixins Needed
+  Can be quickly compiled to CSS at http://less2css.org/
+
+----------------------------------------------------------------------------- */
+//** Padding between columns. Gets divided in half for the left and right.
+@grid-gutter-width:         30px;
+
+@jumbotron-padding:         30px;
+
+// Creates a wrapper for a series of columns
+.make-row(@gutter: @grid-gutter-width) {
+  margin-left:  ceil((@gutter / -2));
+  margin-right: floor((@gutter / -2));
+  &:extend(.clearfix all);
+}
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs:                  480px;
+//** Deprecated `@screen-xs-min` as of v3.2.0
+@screen-xs-min:              @screen-xs;
+//** Deprecated `@screen-phone` as of v3.0.1
+@screen-phone:               @screen-xs-min;
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm:                  768px;
+@screen-sm-min:              @screen-sm;
+//** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet:              @screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md:                  992px;
+@screen-md-min:              @screen-md;
+//** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop:             @screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `@screen-lg` as of v3.0.1
+@screen-lg:                  1200px;
+@screen-lg-min:              @screen-lg;
+//** Deprecated `@screen-lg-desktop` as of v3.0.1
+@screen-lg-desktop:          @screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Number of columns in the grid.
+@grid-columns:              12;
+//** Padding between columns. Gets divided in half for the left and right.
+@grid-gutter-width:         30px;
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+@grid-float-breakpoint:     @screen-sm-min;
+//** Point at which the navbar begins collapsing.
+@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
+
+// Generate the extra small columns
+.make-xs-column(@columns; @gutter: @grid-gutter-width) {
+  position: relative;
+  float: left;
+  width: percentage((@columns / @grid-columns));
+  min-height: 1px;
+  padding-left:  (@gutter / 2);
+  padding-right: (@gutter / 2);
+}
+.make-xs-column-offset(@columns) {
+  margin-left: percentage((@columns / @grid-columns));
+}
+.make-xs-column-push(@columns) {
+  left: percentage((@columns / @grid-columns));
+}
+.make-xs-column-pull(@columns) {
+  right: percentage((@columns / @grid-columns));
+}
+
+// Generate the small columns
+.make-sm-column(@columns; @gutter: @grid-gutter-width) {
+  position: relative;
+  min-height: 1px;
+  padding-left:  (@gutter / 2);
+  padding-right: (@gutter / 2);
+
+  @media (min-width: @screen-sm-min) {
+    float: left;
+    width: percentage((@columns / @grid-columns));
+  }
+}
+.make-sm-column-offset(@columns) {
+  @media (min-width: @screen-sm-min) {
+    margin-left: percentage((@columns / @grid-columns));
+  }
+}
+.make-sm-column-push(@columns) {
+  @media (min-width: @screen-sm-min) {
+    left: percentage((@columns / @grid-columns));
+  }
+}
+.make-sm-column-pull(@columns) {
+  @media (min-width: @screen-sm-min) {
+    right: percentage((@columns / @grid-columns));
+  }
+}
+
+// Generate the medium columns
+.make-md-column(@columns; @gutter: @grid-gutter-width) {
+  position: relative;
+  min-height: 1px;
+  padding-left:  (@gutter / 2);
+  padding-right: (@gutter / 2);
+
+  @media (min-width: @screen-md-min) {
+    float: left;
+    width: percentage((@columns / @grid-columns));
+  }
+}
+.make-md-column-offset(@columns) {
+  @media (min-width: @screen-md-min) {
+    margin-left: percentage((@columns / @grid-columns));
+  }
+}
+.make-md-column-push(@columns) {
+  @media (min-width: @screen-md-min) {
+    left: percentage((@columns / @grid-columns));
+  }
+}
+.make-md-column-pull(@columns) {
+  @media (min-width: @screen-md-min) {
+    right: percentage((@columns / @grid-columns));
+  }
+}
+
+// Generate the large columns
+.make-lg-column(@columns; @gutter: @grid-gutter-width) {
+  position: relative;
+  min-height: 1px;
+  padding-left:  (@gutter / 2);
+  padding-right: (@gutter / 2);
+
+  @media (min-width: @screen-lg-min) {
+    float: left;
+    width: percentage((@columns / @grid-columns));
+  }
+}
+.make-lg-column-offset(@columns) {
+  @media (min-width: @screen-lg-min) {
+    margin-left: percentage((@columns / @grid-columns));
+  }
+}
+.make-lg-column-push(@columns) {
+  @media (min-width: @screen-lg-min) {
+    left: percentage((@columns / @grid-columns));
+  }
+}
+.make-lg-column-pull(@columns) {
+  @media (min-width: @screen-lg-min) {
+    right: percentage((@columns / @grid-columns));
+  }
+}
+
+/* -----------------------------------------------------------------------------
+
+  Paragraph Section CSS.
+
+  Table of Contents:
+    Base Paragraph Styling
+    Widths
+    Nesting
+    Paragraph Types
+    Colors
+
+      The following classes are available if the different Paragraph types
+      need their own individual styling.
+
+      .paragraph.paragraph--type--bp-accordion {} -- Is used below
+      .paragraph.paragraph--type--bp-blank {}
+      .paragraph.paragraph--type--bp-carousel {} -- Is used below
+      .paragraph.paragraph--type--bp-columns {} -- Is used below
+      .paragraph.paragraph--type--bp-columns-three-uneven {} -- Is used below
+      .paragraph.paragraph--type--bp-columns-two-uneven {} -- Is used below
+      .paragraph.paragraph--type--bp-contact {}
+      .paragraph.paragraph--type--bp-image {} -- Is used below
+      .paragraph.paragraph--type--bp-modal {} -- Is used below
+      .paragraph.paragraph--type--bp-simple {}
+      .paragraph.paragraph--type--bp-tabs {} -- Is used below
+      .paragraph.paragraph--type--bp-view {}
+
+----------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/* Base Paragraph Styling.                                                    */
+/* -------------------------------------------------------------------------- */
+
+.paragraph {
+  .make-row();
+  display: table;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+
+.paragraph > .paragraph__column {
+  .make-sm-column(12);
+  .make-md-column(12);
+  .make-lg-column(12);
+  padding-bottom: @jumbotron-padding;
+}
+
+.paragraph--type--bp-carousel .paragraph:last-of-type > .paragraph__column,
+.paragraph--type--bp-columns .paragraph:last-of-type > .paragraph__column,
+.paragraph--type--bp-columns-three-uneven .paragraph:last-of-type > .paragraph__column,
+.paragraph--type--bp-columns-two-uneven .paragraph:last-of-type > .paragraph__column,
+.paragraph--type--bp-tabs .paragraph:last-of-type > .paragraph__column {
+  padding-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Here we add Widths.                                                        */
+/* -------------------------------------------------------------------------- */
+
+/* Adds Width Element -- Tiny. */
+.paragraph.paragraph--width--tiny > .paragraph__column,
+.paragraph.paragraph--width--tiny.paragraph--type--carousel > .carousel-inner {
+  .make-sm-column(4);
+  .make-sm-column-offset(4);
+  .make-md-column(4);
+  .make-md-column-offset(4);
+  .make-lg-column(4);
+  .make-lg-column-offset(4);
+}
+
+/* Adds Width Element -- Narrow. */
+.paragraph.paragraph--width--narrow > .paragraph__column,
+.paragraph.paragraph--width--narrow.paragraph--type--bp-carousel > .carousel-inner {
+  .make-sm-column(6);
+  .make-sm-column-offset(3);
+  .make-md-column(6);
+  .make-md-column-offset(3);
+  .make-lg-column(6);
+  .make-lg-column-offset(3);
+}
+
+/* Adds Width Element -- Medium. */
+.paragraph.paragraph--width--medium > .paragraph__column,
+.paragraph.paragraph--width--medium.paragraph--type--bp-carousel > .carousel-inner {
+  .make-sm-column(8);
+  .make-sm-column-offset(2);
+  .make-md-column(8);
+  .make-md-column-offset(2);
+  .make-lg-column(8);
+  .make-lg-column-offset(2);
+}
+
+/* Adds Width Element -- Wide. */
+.paragraph.paragraph--width--wide > .paragraph__column,
+.paragraph.paragraph--width--wide.paragraph--type--bp-carousel > .carousel-inner {
+  .make-sm-column(10);
+  .make-sm-column-offset(1);
+  .make-md-column(10);
+  .make-md-column-offset(1);
+  .make-lg-column(10);
+  .make-lg-column-offset(1);
+}
+
+/* Adds Width Element -- Full. */
+.paragraph.paragraph--width--full > .paragraph__column ,
+.paragraph.paragraph--width--full.paragraph--type--bp-carousel > .carousel-inner {
+  .make-sm-column(12);
+  .make-md-column(12);
+  .make-lg-column(12);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Nesting paragraphs helpers.                                                */
+/* -------------------------------------------------------------------------- */
+
+/* Resets Base Paragraph Styling for Nested Paragraphs. */
+.paragraph .paragraph,
+.paragraph .paragraph .paragraph {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.paragraph > .paragraph__column .paragraph > .paragraph__column,
+.paragraph > .paragraph__column .paragraph > .paragraph__column .paragraph > .paragraph__column {
+  float: none;
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+  width: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Here we can customize the different Paragraph types.                       */
+/* -------------------------------------------------------------------------- */
+
+/* Accordion Paragraph. */
+/* paragraph--bp-accordion.html.twig */
+/* Adds margin and padding to paragraphs in accordion Section bodies. */
+
+.paragraph.paragraph--type--bp-accordion {
+
+  .panel-collapse {
+
+    > .paragraph {
+      padding-left: 15px;
+      padding-right: 15px;
+
+      > .paragraph__column {
+        padding-bottom: 15px;
+        padding-top: 15px;
+      }
+    }
+
+    .paragraph:last-of-type > .paragraph__column {
+      padding-bottom: 15px;
+    }
+
+    .paragraph + .paragraph,
+    .paragraph + .paragraph + .paragraph {
+      > .paragraph__column {
+        padding-bottom: 30px;
+      }
+    }
+  }
+}
+
+/* Carousel Paragraph. */
+/* paragraph--bp-carousel.html.twig */
+/* Adds float so it behaves like the rest of the Paragraphs. */
+.paragraph--type--bp-carousel {
+  float: left;
+}
+
+/* Removes padding-left/padding-right added by column widths. */
+.paragraph.paragraph--width--tiny.paragraph--type--bp-carousel > .carousel-inner,
+.paragraph.paragraph--width--narrow.paragraph--type--bp-carousel > .carousel-inner,
+.paragraph.paragraph--width--medium.paragraph--type--bp-carousel > .carousel-inner,
+.paragraph.paragraph--width--wide.paragraph--type--bp-carousel > .carousel-inner,
+.paragraph.paragraph--width--full.paragraph--type--bp-carousel > .carousel-inner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Columns Paragraph. */
+/* .field--paragraph--bp-column-content.html.twig */
+/* Removes Padding on Columns (Padding is on columns inside). */
+.paragraph.paragraph--type--bp-columns > .paragraph__column,
+.paragraph.paragraph--type--bp-columns-two-uneven > .paragraph__column,
+.paragraph.paragraph--type--bp-columns-three-uneven > .paragraph__column {
+  padding: 0;
+}
+
+/* Columns Modifiers inside of Columns Element  */
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__6col {
+  .make-sm-column(2);
+}
+
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__5col {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media (min-width: 768px) {
+    float: left;
+    width: 20%;
+  }
+}
+
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__4col {
+  .make-sm-column(3);
+}
+
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__3col {
+  .make-sm-column(4);
+}
+
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__2col {
+  .make-sm-column(6);
+}
+
+.paragraph.paragraph--type--bp-columns .paragraph--type--bp-columns__1col {
+  .make-sm-column(12);
+}
+
+/* These allow us to change the width on a single paragraph in a Multicolumn. */
+.paragraph--type--bp-columns__1col .paragraph.paragraph--width--tiny > .paragraph__column {
+  .make-sm-column(4);
+  .make-sm-column-offset(4);
+  .make-md-column(4);
+  .make-md-column-offset(4);
+  .make-lg-column(4);
+  .make-lg-column-offset(4);
+}
+
+.paragraph--type--bp-columns__1col .paragraph.paragraph--width--narrow > .paragraph__column {
+  .make-sm-column(6);
+  .make-sm-column-offset(3);
+  .make-md-column(6);
+  .make-md-column-offset(3);
+  .make-lg-column(6);
+  .make-lg-column-offset(3);
+}
+
+.paragraph--type--bp-columns__1col .paragraph.paragraph--width--medium > .paragraph__column {
+  .make-sm-column(8);
+  .make-sm-column-offset(2);
+  .make-md-column(8);
+  .make-md-column-offset(2);
+  .make-lg-column(8);
+  .make-lg-column-offset(2);
+}
+
+.paragraph--type--bp-columns__1col .paragraph.paragraph--width--wide > .paragraph__column {
+  .make-sm-column(10);
+  .make-sm-column-offset(1);
+  .make-md-column(10);
+  .make-md-column-offset(1);
+  .make-lg-column(10);
+  .make-lg-column-offset(1);
+}
+
+.paragraph--type--bp-columns__1col .paragraph.paragraph--width--full > .paragraph__column {
+  .make-sm-column(12);
+  .make-md-column(12);
+  .make-lg-column(12);
+}
+
+/* Two Uneven Columns Paragraph. */
+/* .paragraph--bp-columns-two-uneven.html.twig */
+.paragraph--type--bp-columns-two-uneven {
+
+  &.paragraph--style--75-25 {
+    .paragraph--type--bp-columns__2col:nth-of-type(1) {
+      .make-sm-column(9);
+    }
+    .paragraph--type--bp-columns__2col:nth-of-type(2) {
+      .make-sm-column(3);
+    }
+  }
+
+  &.paragraph--style--66-33 {
+    .paragraph--type--bp-columns__2col:nth-of-type(1) {
+      .make-sm-column(8);
+    }
+    .paragraph--type--bp-columns__2col:nth-of-type(2) {
+      .make-sm-column(4);
+    }
+  }
+
+  &.paragraph--style--25-75 {
+    .paragraph--type--bp-columns__2col:nth-of-type(1) {
+      .make-sm-column(3);
+    }
+    .paragraph--type--bp-columns__2col:nth-of-type(2) {
+      .make-sm-column(9);
+    }
+  }
+
+  &.paragraph--style--33-66 {
+    .paragraph--type--bp-columns__2col:nth-of-type(1) {
+      .make-sm-column(4);
+    }
+    .paragraph--type--bp-columns__2col:nth-of-type(2) {
+      .make-sm-column(8);
+    }
+  }
+}
+
+/* Three Uneven Columns Paragraph. */
+/* .paragraph--bp-columns-three-uneven.html.twig */
+.paragraph--type--bp-columns-three-uneven {
+
+  &.paragraph--style--25-50-25 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(3);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(6);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(3);
+    }
+  }
+
+  &.paragraph--style--50-25-25 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(6);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(3);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(3);
+    }
+  }
+
+  &.paragraph--style--25-25-50 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(3);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(3);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(6);
+    }
+  }
+
+  &.paragraph--style--16-66-16 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(2);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(8);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(2);
+    }
+  }
+
+  &.paragraph--style--66-16-16 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(8);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(2);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(2);
+    }
+  }
+
+  &.paragraph--style--16-16-66 {
+    .paragraph--type--bp-columns__3col:nth-of-type(1) {
+      .make-sm-column(2);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(2) {
+      .make-sm-column(2);
+    }
+    .paragraph--type--bp-columns__3col:nth-of-type(3) {
+      .make-sm-column(8);
+    }
+  }
+}
+
+/* Image Paragraph. */
+/* .paragraph--bp-image.html.twig */
+.paragraph--type--bp-image {
+  &.paragraph--width--full {
+    .paragraph__column {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+/* Modal Paragraph. */
+/* .paragraph--bp-modal.html.twig */
+.paragraph--type--bp-modal {
+  .btn.btn-modal {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.modal {
+
+  .modal-header {
+    padding: 15px 30px;
+  }
+
+  .modal-body,
+  .modal-footer {
+    padding: 15px 30px 0 30px;
+  }
+
+  .modal-title {
+    font-weight: bold;
+  }
+
+  .modal-footer {
+    text-align: left;
+  }
+
+  .modal-body .paragraph,
+  .modal-footer .paragraph {
+    display: table;
+    width: 100%;
+  }
+}
+
+/* Tabs Paragraph. */
+/* .paragraph--bp-tabs.html.twig */
+.paragraph.paragraph--type--bp-tabs {
+  .tab-content .paragraph > .paragraph__column {
+    padding-top: 15px;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Here we add Colors.                                                        */
+/* -------------------------------------------------------------------------- */
+/* Adds padding to fill in color. */
+.paragraph.paragraph--color > .paragraph__column {
+  padding-top: @jumbotron-padding;
+  padding-bottom: @jumbotron-padding;
+}
+
+/* Fills color on colorless paragraph after color paragraph. */
+.paragraph.paragraph--color + .paragraph > .paragraph__column {
+  padding-top: @jumbotron-padding;
+}

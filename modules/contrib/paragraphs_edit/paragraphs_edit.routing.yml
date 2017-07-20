@@ -1,0 +1,42 @@
+paragraphs_edit.edit_form:
+  path: '/node/{node}/paragraphs/{field}/{delta}/{paragraph}/edit'
+  defaults:
+    _entity_form: 'paragraph.node_edit'
+  requirements:
+    _entity_access: 'node.update'
+    node: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+      paragraph:
+        type: 'entity:paragraph'
+
+paragraphs_edit.clone_form:
+  path: '/node/{node}/paragraphs/{field}/{delta}/{paragraph}/clone'
+  defaults:
+    _entity_form: 'paragraph.node_clone'
+  requirements:
+    _entity_access: 'node.view'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+      paragraph:
+        type: 'entity:paragraph'
+
+paragraphs_edit.delete_form:
+  path: '/node/{node}/paragraphs/{field}/{delta}/{paragraph}/delete'
+  defaults:
+    _entity_form: 'paragraph.node_delete'
+  requirements:
+    _entity_access: 'node.update'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+      paragraph:
+        type: 'entity:paragraph'

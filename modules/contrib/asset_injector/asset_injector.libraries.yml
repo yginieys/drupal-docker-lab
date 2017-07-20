@@ -1,0 +1,14 @@
+ace-editor:
+  remote: https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js
+  version: 1.2.3
+  license:
+    name: Ace Editor
+    url: https://ace.c9.io
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js: { type: external, minified: true }
+    asset_injector.js: {}
+  css:
+    base:
+      asset_injector.css: {}
+  dependencies:
+      - core/jquery.ui.resizable

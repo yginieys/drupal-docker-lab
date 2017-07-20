@@ -1,0 +1,15 @@
+name: "Paragraphs Edit"
+type: module
+description: "Allows users to edit paragraphs."
+# core: 8.x
+package: Paragraphs
+
+dependencies:
+  - node
+  - paragraphs
+
+# Information added by Drupal.org packaging script on 2016-06-02
+version: '8.x-1.0-alpha4'
+core: '8.x'
+project: 'paragraphs_edit'
+datestamp: 1464865036

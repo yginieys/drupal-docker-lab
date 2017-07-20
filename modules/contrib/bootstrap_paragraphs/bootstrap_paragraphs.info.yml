@@ -1,0 +1,27 @@
+name: Bootstrap Paragraphs
+type: module
+description: A suite of Paragraph bundles made with the Boostrap framework.
+# core: 8.x
+package: Paragraphs
+dependencies:
+  - contact
+  - contact_formatter
+  - entity_reference_revisions
+  - field
+  - file
+  - filter
+  - image
+  - link
+  - options
+  - paragraphs
+  - system
+  - text
+  - user
+  - views
+  - viewsreference
+
+# Information added by Drupal.org packaging script on 2017-06-19
+version: '8.x-2.0-alpha6+1-dev'
+core: '8.x'
+project: 'bootstrap_paragraphs'
+datestamp: 1497898751

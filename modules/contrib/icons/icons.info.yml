@@ -1,0 +1,13 @@
+name: Icons
+type: module
+description: Icons API Module
+# core: 8.x
+package: Icons
+dependencies:
+  - drupal:options
+
+# Information added by Drupal.org packaging script on 2017-03-20
+version: '8.x-1.0-rc1'
+core: '8.x'
+project: 'icons'
+datestamp: 1489996686
